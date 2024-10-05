@@ -12,9 +12,9 @@
         src: "{{ item }}"
         dest: /home/docker/
       loop:
-        - /var/lib/jenkins/Dockerfile
-        - /var/lib/jenkins/webapp/target/webapp.war
-        - /var/lib/jenkins/webapp/regapp-deploy.yml
+        - /var/lib/jenkins/workspace/sample/Dockerfile
+        - /var/lib/jenkins/workspace/sample/webapp/target/webapp.war
+        - /var/lib/jenkins/workspace/sample/regapp-deploy.yml
 
     - name: Build Docker Image
       community.docker.docker_image:
