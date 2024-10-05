@@ -6,6 +6,7 @@
       file:
         path: /home/docker
         state: directory
+        mode: '0755'
 
     - name: Copy required files to Docker server
       copy:
@@ -16,18 +17,15 @@
         - /var/lib/jenkins/workspace/sample/webapp/target/webapp.war
         - /var/lib/jenkins/workspace/sample/regapp-deploy.yml
 
-    - name: Build Docker Image
-      community.docker.docker_image:
-        name: "{{ dockerhub_username }}/{{ image_name }}"
-        tag: "{{ image_tag }}"
-        build:
-          path: /home/docker
+    - name: Build Docker Image using shell command
+      shell: |
+        docker build -t {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }} /home/docker
+      args:
+        chdir: /home/docker
 
-    - name: Push Docker Image to Docker Hub
-      community.docker.docker_image:
-        name: "{{ dockerhub_username }}/{{ image_name }}"
-        tag: "{{ image_tag }}"
-        push: true
+    - name: Push Docker Image to Docker Hub using shell command
+      shell: |
+        docker push {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
 
   vars:
     dockerhub_username: "rakarun"
