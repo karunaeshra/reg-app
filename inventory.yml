@@ -4,4 +4,4 @@ all:
       ansible_host: 54.92.187.160
       ansible_user: ubuntu
 
-~                              
+                             
