@@ -1,0 +1,6 @@
+---
+- name: Deploy Application to Kubernetes
+  hosts: web01
+  tasks:
+    - name: Apply Deployment
+      command: kubectl apply -f docker/deployment.yml

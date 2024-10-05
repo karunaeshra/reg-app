@@ -1,0 +1,36 @@
+---
+- name: Deploy Docker Image to Docker Hub
+  hosts: web01
+  tasks:
+    - name: Create docker directory on Docker server
+      file:
+        path: /home/docker
+        state: directory
+
+    - name: Copy required files to Docker server
+      copy:
+        src: "{{ item }}"
+        dest: /home/docker/
+      loop:
+        - /var/lib/jenkins/Dockerfile
+        - /var/lib/jenkins/webapp/target/webapp.war
+        - /var/lib/jenkins/webapp/regapp-deploy.yml
+
+    - name: Build Docker Image
+      community.docker.docker_image:
+        name: "{{ dockerhub_username }}/{{ image_name }}"
+        tag: "{{ image_tag }}"
+        build:
+          path: /home/docker
+
+    - name: Push Docker Image to Docker Hub
+      community.docker.docker_image:
+        name: "{{ dockerhub_username }}/{{ image_name }}"
+        tag: "{{ image_tag }}"
+        push: true
+
+  vars:
+    dockerhub_username: "rakarun"
+    image_name: "regapp"
+    image_tag: "latest"
+
