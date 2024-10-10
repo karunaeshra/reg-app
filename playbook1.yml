@@ -17,18 +17,17 @@
         - /var/lib/jenkins/workspace/sample/webapp/target/webapp.war
         - /var/lib/jenkins/workspace/sample/regapp-deploy.yml
 
-    - name: Build Docker Image using shell command
-      shell: |
-        docker build -t {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }} /home/docker
-      args:
-        chdir: /home/docker
+    - name: docker hub login credentails
+      shell: docker login -u "{{ docker_username }}" -p "{{ docker_password }}" https://index.docker.io/v1/
 
+    - name: Build Docker Image using shell command
+      shell: docker build -t {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }} /home/docker
+    
     - name: Push Docker Image to Docker Hub using shell command
-      shell: |
-        docker push {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
+      shell: docker push {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
 
   vars:
     dockerhub_username: "rakarun"
-    image_name: "regapp"
+    image_name: "regapp1"
     image_tag: "latest"
 
