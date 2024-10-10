@@ -13,9 +13,9 @@
         src: "{{ item }}"
         dest: /home/docker/
       loop:
-        - /var/lib/jenkins/workspace/sample/Dockerfile
-        - /var/lib/jenkins/workspace/sample/webapp/target/webapp.war
-        - /var/lib/jenkins/workspace/sample/regapp-deploy.yml
+        - /var/lib/jenkins/workspace/sample1/Dockerfile
+        - /var/lib/jenkins/workspace/sample1/webapp/target/webapp.war
+        - /var/lib/jenkins/workspace/sample1/regapp-deploy.yml
 
     - name: docker hub login credentails
       shell: docker login -u "{{ docker_username }}" -p "{{ docker_password }}" https://index.docker.io/v1/
