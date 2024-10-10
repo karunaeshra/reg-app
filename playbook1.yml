@@ -25,7 +25,8 @@
     
     - name: Push Docker Image to Docker Hub using shell command
       shell: docker push {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
-
+  vars_files:
+    - /var/lib/jenkins/workspace/sample1/vault.yml
   vars:
     dockerhub_username: "rakarun"
     image_name: "regapp1"
